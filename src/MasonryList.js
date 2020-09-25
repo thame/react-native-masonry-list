@@ -593,6 +593,36 @@ export default class MasonryList extends React.PureComponent {
 			this.props.onEndReached(info);
 		}
 	}
+	
+	renderColumn = ({item, index}) => {
+		return (
+			<Column
+				data={item}
+				itemSource={this.props.itemSource}
+				initialNumInColsToRender={this.props.initialNumInColsToRender}
+				layoutDimensions={this.props.layoutDimensions}
+				backgroundColor={this.props.backgroundColor}
+				imageContainerStyle={this.props.imageContainerStyle}
+				spacing={this.props.spacing}
+				key={`MASONRY-COLUMN-${index}`}
+				colIndex={index}
+
+				customImageComponent={this.props.customImageComponent}
+				customImageProps={this.props.customImageProps}
+				completeCustomComponent={this.props.completeCustomComponent}
+
+				onPressImage={this.props.onPressImage}
+				onLongPressImage={this.props.onLongPressImage}
+
+				renderIndividualHeader={this.props.renderIndividualHeader}
+				renderIndividualFooter={this.props.renderIndividualFooter}
+			/>
+		);
+	}
+
+	keyExtractor = (item, index) => {
+		return "COLUMN-" + index.toString() + "/";
+	}
 
 	render() {
 		return (
@@ -617,35 +647,9 @@ export default class MasonryList extends React.PureComponent {
 						? this.props.initialColToRender
 						: this.props.columns
 				}
-				keyExtractor={(item, index) => {
-					return "COLUMN-" + index.toString() + "/"; // + (this.props.columns - 1);
-				}}
+				keyExtractor={this.keyExtractor}
 				data={this.state._sortedData}
-				renderItem={({ item, index }) => {
-					return (
-						<Column
-							data={item}
-							itemSource={this.props.itemSource}
-							initialNumInColsToRender={this.props.initialNumInColsToRender}
-							layoutDimensions={this.props.layoutDimensions}
-							backgroundColor={this.props.backgroundColor}
-							imageContainerStyle={this.props.imageContainerStyle}
-							spacing={this.props.spacing}
-							key={`MASONRY-COLUMN-${index}`}
-							colIndex={index}
-
-							customImageComponent={this.props.customImageComponent}
-							customImageProps={this.props.customImageProps}
-							completeCustomComponent={this.props.completeCustomComponent}
-
-							onPressImage={this.props.onPressImage}
-							onLongPressImage={this.props.onLongPressImage}
-
-							renderIndividualHeader={this.props.renderIndividualHeader}
-							renderIndividualFooter={this.props.renderIndividualFooter}
-						/>
-					);
-				}}
+				renderItem={this.renderColumn}
 			/>
 		);
 	}
