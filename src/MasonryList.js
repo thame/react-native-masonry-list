@@ -627,15 +627,7 @@ export default class MasonryList extends React.PureComponent {
 	render() {
 		return (
 			<FlatList
-				style={{
-					flex: 1,
-					padding: (this.props.layoutDimensions.width / 100) * this.props.spacing / 2,
-					backgroundColor: this.props.backgroundColor
-				}}
-				contentContainerStyle={[{
-					flexDirection: "row",
-					width: "100%"
-				}, this.props.listContainerStyle]}
+				contentContainerStyle={this.props.listContainerStyle}
 				removeClippedSubviews={true}
 				onEndReachedThreshold={this.props.onEndReachedThreshold}
 				refreshing={this.props.refreshing}
